@@ -69,7 +69,7 @@ T6:AddToggle({
   end    
 })
 
-T4:AddTextbox({
+T3:AddTextbox({
   Name = "Bring Distance",
   Default = "11",
   TextDisappear = false,
