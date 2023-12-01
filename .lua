@@ -2,6 +2,14 @@ local function AutoFight(world,enemy) -- world = 1, enemy = 2
     game:GetService("ReplicatedStorage")["Events"]["AutoFight"]:FireServer("Fight",world,enemy)
 end
 
+local function child(wrkspc,func)
+for i,v in pairs(wrkspc:GetChilrend()) do
+        if v:IsA("Model") then
+            func(v)
+        end
+    end
+end
+
 local OrionLib = loadstring(game:HttpGet("https://pastebin.com/raw/NMEHkVTb"))()
 local Window = OrionLib:MakeWindow({Name = "VIP Turtle Hub V3", HidePremium = false, SaveConfig = false, ConfigFolder = "TurtleFi"})
 
@@ -29,7 +37,31 @@ Icon = "rbxassetid://",
 PremiumOnly = false
 })
 
-T3:AddLabel("Coming Soon!")
+T3:AddToggle({
+  Name = "Auto Enter Dungeon",
+  Default = false,
+  Callback = function(Value)
+    _G.edung = Value
+      while wait() do
+      if _G.edung == false then break end
+        game:GetService("ReplicatedStorage")["Events"]["DungeonEvent"]:FireServer("StartDungeon")
+      end
+  end    
+})
+
+T3:AddToggle({
+  Name = "Auto Kill",
+  Default = false,
+  Callback = function(Value)
+    _G.dungeonkill = Value
+      while wait() do
+      if _G.dungeonkill == false then break end
+        child(game:GetService("Workspace").BreakableParts.Dungeon,function(target)
+           game:GetService("ReplicatedStorage")["Events"]["PunchEvent"]:FireServer(target)
+        end)
+      end
+  end    
+})
 
 T4:AddTextbox({
   Name = "World Number",
@@ -161,6 +193,19 @@ T1:AddToggle({
       while wait() do
       if _G.asc == false then break end
         game:GetService("ReplicatedStorage")["Events"]["AscendEvent"]:FireServer(true)
+      end
+  end
+})
+
+T1:AddToggle({
+  Name = "Auto Spin",
+  Default = false,
+  Callback = function(Value)
+    _G.spin = Value
+      while wait() do
+      if _G.spin == false then break end
+        game:GetService("ReplicatedStorage")["Events"]["SpinWheelEvent"]:FireServer("Spin")
+        game:GetService("ReplicatedStorage")["Events"]["SpinWheelEvent"]:FireServer("SpinComplete")
       end
   end
 })
