@@ -115,7 +115,7 @@ T3:AddToggle({
       if _G.fnpc == false then break end
         child(game:GetService("Workspace").BreakableParts.Dungeon,function(target)
             if target:IsA("Model") and target:FindFirstChild("Humanoid") then
-                target.WalkSpeed = 0
+                target.Humanoid.WalkSpeed = 0
             end
         end)
       end
@@ -131,7 +131,7 @@ T3:AddToggle({
       if _G.bnpc == false then break end
         child(game:GetService("Workspace").BreakableParts.Dungeon,function(target)
             if target:IsA("Model") and target:FindFirstChild("HumanoidRootPart") then
-                target.CFrame = lp.Character.HumanoidRootPart.CFrame * CFrame.new(0,0,_G.AsyncDistance)
+                target.HumanoidRootPart.CFrame = lp.Character.HumanoidRootPart.CFrame * CFrame.new(0,0,_G.AsyncDistance)
             end
         end)
       end
