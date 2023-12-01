@@ -10,6 +10,7 @@ end
 
 local OrionLib = loadstring(game:HttpGet("https://pastebin.com/raw/NMEHkVTb"))()
 local Window = OrionLib:MakeWindow({Name = "VIP Turtle Hub V3", HidePremium = false, SaveConfig = false, ConfigFolder = "TurtleFi"})
+local lp = game.Players.LocalPlayer
 
 local T1 = Window:MakeTab({
 Name = "Main",
@@ -68,6 +69,15 @@ T6:AddToggle({
   end    
 })
 
+T4:AddTextbox({
+  Name = "Bring Distance",
+  Default = "11",
+  TextDisappear = false,
+  Callback = function(Value)
+    _G.AsyncDistance = -tonumber(Value)
+  end  
+})
+
 T3:AddToggle({
   Name = "Auto Enter Dungeon",
   Default = false,
@@ -90,6 +100,38 @@ T3:AddToggle({
         child(game:GetService("Workspace").BreakableParts.Dungeon,function(target)
             if target:IsA("Model") then
                 game:GetService("ReplicatedStorage")["Events"]["PunchEvent"]:FireServer(target)
+            end
+        end)
+      end
+  end    
+})
+
+T3:AddToggle({
+  Name = "Auto Freeze NPCs",
+  Default = false,
+  Callback = function(Value)
+    _G.fnpc = Value
+      while wait() do
+      if _G.fnpc == false then break end
+        child(game:GetService("Workspace").BreakableParts.Dungeon,function(target)
+            if target:IsA("Model") and target:FindFirstChild("Humanoid") then
+                target.WalkSpeed = 0
+            end
+        end)
+      end
+  end    
+})
+
+T3:AddToggle({
+  Name = "Auto Bring NPCs",
+  Default = false,
+  Callback = function(Value)
+    _G.bnpc = Value
+      while wait() do
+      if _G.bnpc == false then break end
+        child(game:GetService("Workspace").BreakableParts.Dungeon,function(target)
+            if target:IsA("Model") and target:FindFirstChild("HumanoidRootPart") then
+                target.CFrame = lp.Character.HumanoidRootPart.CFrame * CFrame.new(0,0,_G.AsyncDistance)
             end
         end)
       end
