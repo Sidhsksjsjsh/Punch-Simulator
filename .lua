@@ -3,7 +3,7 @@ local function AutoFight(world,enemy) -- world = 1, enemy = 2
 end
 
 local function child(wrkspc,func)
-for i,v in pairs(wrkspc:GetChilren()) do
+for i,v in pairs(wrkspc:GetChildren()) do
         func(v)
     end
 end
