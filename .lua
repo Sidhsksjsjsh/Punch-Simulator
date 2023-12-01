@@ -35,6 +35,39 @@ Icon = "rbxassetid://",
 PremiumOnly = false
 })
 
+local T5 = Window:MakeTab({
+Name = "Teleport",
+Icon = "rbxassetid://",
+PremiumOnly = false
+})
+
+local T6 = Window:MakeTab({
+Name = "Config",
+Icon = "rbxassetid://",
+PremiumOnly = false
+})
+
+T6:AddDropdown({
+   Name = "Select Item",
+   Default = "Gems",
+   Options = {"Gems","Screws","Bolts","Coppers"},
+   Callback = function(Value)
+      _G.AsyncItems = Value
+   end    
+})
+
+T6:AddToggle({
+  Name = "Get Item ( with bad chance 😭 )",
+  Default = false,
+  Callback = function(Value)
+    _G.getItems = Value
+      while wait() do
+      if _G.getItems == false then break end
+        game:GetService("ReplicatedStorage")["CollectedCurrency"]:FireServer(_G.AsyncItems,math.random())
+      end
+  end    
+})
+
 T3:AddToggle({
   Name = "Auto Enter Dungeon",
   Default = false,
@@ -48,14 +81,16 @@ T3:AddToggle({
 })
 
 T3:AddToggle({
-  Name = "Auto Kill",
+  Name = "Auto Kill Nearest",
   Default = false,
   Callback = function(Value)
     _G.dungeonkill = Value
       while wait() do
       if _G.dungeonkill == false then break end
         child(game:GetService("Workspace").BreakableParts.Dungeon,function(target)
-           game:GetService("ReplicatedStorage")["Events"]["PunchEvent"]:FireServer(target)
+            if target:IsA("Model") then
+                game:GetService("ReplicatedStorage")["Events"]["PunchEvent"]:FireServer(target)
+            end
         end)
       end
   end    
