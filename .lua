@@ -3,10 +3,8 @@ local function AutoFight(world,enemy) -- world = 1, enemy = 2
 end
 
 local function child(wrkspc,func)
-for i,v in pairs(wrkspc:GetChilrend()) do
-        if v:IsA("Model") then
-            func(v)
-        end
+for i,v in pairs(wrkspc:GetChilren()) do
+        func(v)
     end
 end
 
