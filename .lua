@@ -126,8 +126,10 @@ T8:AddToggle({
       while wait() do
       if _G.ppcd == false then break end
         descend(workspace,function(Prompt)
-            Prompt.HoldDuration = 0
-            Prompt.ActionText = "🚫 Cooldown Removed 🚫"
+            if Prompt:IsA("ProximityPrompt") then
+               Prompt.HoldDuration = 0
+               Prompt.ActionText = "🚫 Cooldown Removed 🚫"
+            end
         end)
       end
   end    
