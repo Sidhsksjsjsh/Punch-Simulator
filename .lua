@@ -12,6 +12,37 @@ local OrionLib = loadstring(game:HttpGet("https://pastebin.com/raw/NMEHkVTb"))()
 local Window = OrionLib:MakeWindow({Name = "VIP Turtle Hub V3", HidePremium = false, SaveConfig = false, ConfigFolder = "TurtleFi"})
 local lp = game.Players.LocalPlayer
 
+local function NearNPC(str)
+    local NPCTerdekat
+    local jarakTerdekat = math.huge
+    
+    child(str,function(npc)
+        if npc:IsA("Model") and npc:FindFirstChild("Humanoid") then
+            local jarak = (npc:FindFirstChild("HumanoidRootPart").Position - lp.Character.HumanoidRootPart.Position).Magnitude
+            if jarak < jarakTerdekat then
+                NPCTerdekat = npc
+                jarakTerdekat = jarak
+            end
+        end
+    end)
+    
+    return NPCTerdekat
+end
+
+--[[Main loop
+while true do
+    wait(1)  -- Ubah sesuai kebutuhan
+    
+    local NPC = CariNPCTerdekat()
+    
+    if NPC then
+        print("NPC terdekat ditemukan:", NPC.Name)
+        -- Lakukan tindakan terhadap NPC terdekat di sini
+    else
+        print("Tidak ada NPC terdekat.")
+    end
+end]]
+
 local T1 = Window:MakeTab({
 Name = "Main",
 Icon = "rbxassetid://",
@@ -64,7 +95,7 @@ T6:AddToggle({
     _G.getItems = Value
       while wait() do
       if _G.getItems == false then break end
-        game:GetService("ReplicatedStorage")["CollectedCurrency"]:FireServer(_G.AsyncItems,math.random())
+        game:GetService("ReplicatedStorage")["CollectedCurrency"]:FireServer(_G.AsyncItems,math.random(2.1))
       end
   end    
 })
@@ -98,8 +129,9 @@ T3:AddToggle({
       while wait() do
       if _G.dungeonkill == false then break end
         child(game:GetService("Workspace").BreakableParts.Dungeon,function(target)
-            if target:IsA("Model") then
-                game:GetService("ReplicatedStorage")["Events"]["PunchEvent"]:FireServer(target)
+            local NPC = NearNPC(game:GetService("Workspace").BreakableParts.Dungeon)
+            if target:IsA("Model") and NPC then
+                game:GetService("ReplicatedStorage")["Events"]["PunchEvent"]:FireServer(NPC)
             end
         end)
       end
