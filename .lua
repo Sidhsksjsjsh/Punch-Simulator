@@ -130,9 +130,8 @@ T3:AddToggle({
       while wait() do
       if _G.dungeonkill == false then break end
         child(game:GetService("Workspace").BreakableParts.Dungeon,function(target)
-            local NPC = NearNPC(game:GetService("Workspace").BreakableParts.Dungeon,_G.getAsyncKillDistance)
-            if target:IsA("Model") and NPC then
-                game:GetService("ReplicatedStorage")["Events"]["PunchEvent"]:FireServer(NPC)
+            if target:IsA("Model") then
+                game:GetService("ReplicatedStorage")["Events"]["PunchEvent"]:FireServer(NearNPC(game:GetService("Workspace").BreakableParts.Dungeon,_G.getAsyncKillDistance))
             end
         end)
       end
