@@ -8,6 +8,12 @@ for i,v in pairs(wrkspc:GetChildren()) do
     end
 end
 
+local function PlayerFounder(func)
+for _,v in pairs(game.Players:GetPlayers()) do
+        func(v)
+    end
+end
+
 local OrionLib = loadstring(game:HttpGet("https://pastebin.com/raw/NMEHkVTb"))()
 local Window = OrionLib:MakeWindow({Name = "VIP Turtle Hub V3", HidePremium = false, SaveConfig = false, ConfigFolder = "TurtleFi"})
 local lp = game.Players.LocalPlayer
@@ -43,6 +49,12 @@ while true do
     end
 end]]
 
+local GlovesHandler = {}
+local EggHandler = {}
+
+OrionLib:AddTable(game:GetService("ReplicatedStorage").Gloves,GlovesHandler)
+OrionLib:AddTable(game:GetService("Workspace").EggVendors,EggHandler)
+
 local T1 = Window:MakeTab({
 Name = "Main",
 Icon = "rbxassetid://",
@@ -74,12 +86,36 @@ PremiumOnly = false
 })
 
 local T6 = Window:MakeTab({
-Name = "Config",
+Name = "Config & Troll",
 Icon = "rbxassetid://",
 PremiumOnly = false
 })
 
-T6:AddDropdown({
+local S1 = T6:AddSection({
+Name = "CONFIGS | GET ITEMS"
+})
+
+local S2 = T6:AddSection({
+Name = "TROLLING | SPAM TRADE"
+})
+
+T5:AddTextbox({
+  Name = "Enter World",
+  Default = "1",
+  TextDisappear = false,
+  Callback = function(Value)
+    _G.AsyncWorldNumber = tonumber(Value)
+  end  
+})
+
+T5:AddButton({
+Name = "Teleport",
+Callback = function()
+      game:GetService("ReplicatedStorage")["Events"]["TeleportEvent"]:InvokeServer("Teleport",_G.AsyncWorldNumber)
+  end    
+})
+
+S1:AddDropdown({
    Name = "Select Item",
    Default = "Gems",
    Options = {"Gems","Screws","Bolts","Coppers"},
@@ -88,7 +124,7 @@ T6:AddDropdown({
    end    
 })
 
-T6:AddToggle({
+S1:AddToggle({
   Name = "Get Item ( with bad chance 😭 )",
   Default = false,
   Callback = function(Value)
@@ -96,6 +132,44 @@ T6:AddToggle({
       while wait() do
       if _G.getItems == false then break end
         game:GetService("ReplicatedStorage")["CollectedCurrency"]:FireServer(_G.AsyncItems,math.random(2.1))
+      end
+  end    
+})
+
+S2:AddToggle({
+  Name = "Spam Trade",
+  Default = false,
+  Callback = function(Value)
+    _G.strd = Value
+      while wait() do
+      if _G.strd == false then break end
+        PlayerFounder(function(shit)
+           game:GetService("ReplicatedStorage")["Events"]["SendTradeInvite"]:FireServer(shit)
+        end)
+      end
+  end    
+})
+
+S2:AddToggle({
+  Name = "Auto Accept Trade",
+  Default = false,
+  Callback = function(Value)
+    _G.atrd = Value
+      while wait() do
+      if _G.atrd == false then break end
+        game:GetService("ReplicatedStorage")["Events"]["TradeState"]:FireServer("Ready")
+      end
+  end    
+})
+
+S2:AddToggle({
+  Name = "Auto Cancel Trade",
+  Default = false,
+  Callback = function(Value)
+    _G.ctrd = Value
+      while wait() do
+      if _G.ctrd == false then break end
+        game:GetService("ReplicatedStorage")["Events"]["TradeState"]:FireServer("Cancel")
       end
   end    
 })
