@@ -14,9 +14,16 @@ for _,v in pairs(game.Players:GetPlayers()) do
     end
 end
 
+local function descend(wrkspc,func)
+for i,v in pairs(wrkspc:GetDescendants()) do
+        func(v)
+    end
+end
+
 local OrionLib = loadstring(game:HttpGet("https://pastebin.com/raw/NMEHkVTb"))()
 local Window = OrionLib:MakeWindow({Name = "VIP Turtle Hub V3", HidePremium = false, SaveConfig = false, ConfigFolder = "TurtleFi"})
 local lp = game.Players.LocalPlayer
+local workspace = game:GetService("Workspace")
 
 local function NearNPC(str,array)
     local NPCTerdekat
@@ -103,6 +110,27 @@ local T7 = Window:MakeTab({
 Name = "Gloves",
 Icon = "rbxassetid://",
 PremiumOnly = false
+})
+
+local T8 = Window:MakeTab({
+Name = "ProximityPrompt",
+Icon = "rbxassetid://",
+PremiumOnly = false
+})
+
+T8:AddToggle({
+  Name = "Remove ProximityPrompt Duration",
+  Default = true,
+  Callback = function(Value)
+    _G.ppcd = Value
+      while wait() do
+      if _G.ppcd == false then break end
+        descend(workspace,function(Prompt)
+            Prompt.HoldDuration = 0
+            Prompt.ActionText = "🚫 Cooldown Removed 🚫"
+        end)
+      end
+  end    
 })
 
 T5:AddTextbox({
