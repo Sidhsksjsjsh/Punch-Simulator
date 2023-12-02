@@ -120,7 +120,7 @@ PremiumOnly = false
 
 T8:AddToggle({
   Name = "Remove ProximityPrompt Duration",
-  Default = true,
+  Default = false,
   Callback = function(Value)
     _G.ppcd = Value
       while wait() do
