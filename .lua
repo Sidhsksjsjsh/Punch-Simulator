@@ -146,7 +146,7 @@ T3:AddToggle({
       while wait() do
       if _G.fnpc == false then break end
         child(game:GetService("Workspace").BreakableParts.Dungeon,function(target)
-            if target:IsA("Model") and target:FindFirstChild("Humanoid") then
+            if target:IsA("Model") then
                 target.Humanoid.WalkSpeed = 0
             end
         end)
