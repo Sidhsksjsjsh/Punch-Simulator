@@ -99,6 +99,12 @@ local S2 = T6:AddSection({
 Name = "TROLLING | SPAM TRADE"
 })
 
+local T7 = Window:MakeTab({
+Name = "Gloves",
+Icon = "rbxassetid://",
+PremiumOnly = false
+})
+
 T5:AddTextbox({
   Name = "Enter World",
   Default = "1",
@@ -112,6 +118,23 @@ T5:AddButton({
 Name = "Teleport",
 Callback = function()
       game:GetService("ReplicatedStorage")["Events"]["TeleportEvent"]:InvokeServer("Teleport",_G.AsyncWorldNumber)
+  end    
+})
+
+T7:AddDropdown({
+   Name = "Select Gloves",
+   Default = GlovesHandler[1],
+   Options = GlovesHandler,
+   Callback = function(Value)
+      _G.AsyncGloveShop = Value
+   end    
+})
+
+T7:AddButton({
+Name = "Equip Glove",
+Callback = function()
+      game:GetService("ReplicatedStorage")["Events"]["ClickedGlovesButton"]:FireServer(_G.AsyncGloveShop)
+      game:GetService("ReplicatedStorage")["Events"]["RequestGloveShop"]:FireServer()
   end    
 })
 
@@ -274,13 +297,23 @@ T4:AddToggle({
   end    
 })
 
-T2:AddTextbox({
+--[[T2:AddTextbox({
   Name = "Egg number",
   Default = "1",
   TextDisappear = false,
   Callback = function(Value)
     _G.AsyncEgg = Value
   end  
+})
+]]
+
+T2:AddDropdown({
+   Name = "Select Eggs",
+   Default = EggHandler[1],
+   Options = EggHandler,
+   Callback = function(Value)
+      _G.AsyncEgg = Value
+   end    
 })
 
 T2:AddToggle({
