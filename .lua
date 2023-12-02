@@ -12,16 +12,16 @@ local OrionLib = loadstring(game:HttpGet("https://pastebin.com/raw/NMEHkVTb"))()
 local Window = OrionLib:MakeWindow({Name = "VIP Turtle Hub V3", HidePremium = false, SaveConfig = false, ConfigFolder = "TurtleFi"})
 local lp = game.Players.LocalPlayer
 
-local function NearNPC(str)
+local function NearNPC(str,array)
     local NPCTerdekat
-    local jarakTerdekat = math.huge
+    --local jarakTerdekat = math.huge
     
     child(str,function(npc)
         if npc:IsA("Model") and npc:FindFirstChild("Humanoid") then
             local jarak = (npc:FindFirstChild("HumanoidRootPart").Position - lp.Character.HumanoidRootPart.Position).Magnitude
-            if jarak < jarakTerdekat then
+            if jarak < array then
                 NPCTerdekat = npc
-                jarakTerdekat = jarak
+                --jarakTerdekat = jarak
             end
         end
     end)
@@ -101,11 +101,12 @@ T6:AddToggle({
 })
 
 T3:AddTextbox({
-  Name = "Bring Distance",
+  Name = "Bring and Kill Distance",
   Default = "11",
   TextDisappear = false,
   Callback = function(Value)
     _G.AsyncDistance = -tonumber(Value)
+    _G.getAsyncKillDistance = tonumber(Value)
   end  
 })
 
@@ -129,7 +130,7 @@ T3:AddToggle({
       while wait() do
       if _G.dungeonkill == false then break end
         child(game:GetService("Workspace").BreakableParts.Dungeon,function(target)
-            local NPC = NearNPC(game:GetService("Workspace").BreakableParts.Dungeon)
+            local NPC = NearNPC(game:GetService("Workspace").BreakableParts.Dungeon,_G.getAsyncKillDistance)
             if target:IsA("Model") and NPC then
                 game:GetService("ReplicatedStorage")["Events"]["PunchEvent"]:FireServer(NPC)
             end
