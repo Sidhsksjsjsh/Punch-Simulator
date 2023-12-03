@@ -1,3 +1,7 @@
+--[[
+Next Update: Complete features, all game systems are here!
+]]
+
 local function AutoFight(world,enemy) -- world = 1, enemy = 2
     game:GetService("ReplicatedStorage")["Events"]["AutoFight"]:FireServer("Fight",world,enemy)
 end
@@ -148,6 +152,15 @@ T5:AddButton({
 Name = "Teleport",
 Callback = function()
       game:GetService("ReplicatedStorage")["Events"]["TeleportEvent"]:InvokeServer("Teleport",_G.AsyncWorldNumber)
+      OrionLib:MakeNotification({Name = "Teleported!",Content = "Successfully teleported to the zone",Image = "rbxassetid://",Time = 5})
+  end    
+})
+
+T5:AddButton({
+Name = "Buy Zone",
+Callback = function()
+      game:GetService("ReplicatedStorage")["Events"]["TeleportEvent"]:InvokeServer("PurchaseTeleport",_G.AsyncWorldNumber)
+      OrionLib:MakeNotification({Name = "Purchased!",Content = "Successfully purchased the zone!",Image = "rbxassetid://",Time = 5})
   end    
 })
 
@@ -228,12 +241,12 @@ S2:AddToggle({
 })
 
 T3:AddTextbox({
-  Name = "Bring and Kill Distance",
+  Name = "Bring Distance",
   Default = "11",
   TextDisappear = false,
   Callback = function(Value)
     _G.AsyncDistance = -tonumber(Value)
-    _G.getAsyncKillDistance = tonumber(Value)
+    --_G.getAsyncKillDistance = tonumber(Value)
   end  
 })
 
@@ -258,7 +271,7 @@ T3:AddToggle({
       if _G.dungeonkill == false then break end
         child(game:GetService("Workspace").BreakableParts.Dungeon,function(target)
             if target:IsA("Model") then
-                game:GetService("ReplicatedStorage")["Events"]["PunchEvent"]:FireServer(NearNPC(game:GetService("Workspace").BreakableParts.Dungeon,_G.getAsyncKillDistance))
+                game:GetService("ReplicatedStorage")["Events"]["PunchEvent"]:FireServer(NearNPC(game:GetService("Workspace").BreakableParts.Dungeon,11))
             end
         end)
       end
