@@ -211,10 +211,22 @@ Callback = function()
 })
 
 T5:AddButton({
-Name = "Buy Zone",
+Name = "Buy Zone [ 20 Gems ]",
 Callback = function()
       game:GetService("ReplicatedStorage")["Events"]["TeleportEvent"]:InvokeServer("PurchaseTeleport",_G.AsyncWorldNumber)
       OrionLib:MakeNotification({Name = "Purchased!",Content = "Successfully purchased the zone!",Image = "rbxassetid://",Time = 5})
+  end    
+})
+
+T5:AddToggle({
+  Name = "Unlock next world [ Door ]",
+  Default = false,
+  Callback = function(Value)
+    _G.GUIButton = Value
+      while wait() do
+      if _G.GUIButton == false then break end
+        game:GetService("ReplicatedStorage")["Events"]["LevelGUIBuyButtonPressed"]:FireServer(_G.AsyncWorldNumber)
+      end
   end    
 })
 
