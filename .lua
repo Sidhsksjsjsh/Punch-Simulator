@@ -62,6 +62,15 @@ end]]
 
 local GlovesHandler = {}
 local EggHandler = {}
+local upgradeList = {
+    "CoinBoost",
+    "GemBoost",
+    "ScrewCopperBoltBoost",
+    "EggLuck",
+    "TankSpeed",
+    "CoinCollectionRange"
+}
+
 
 OrionLib:AddTable(game:GetService("ReplicatedStorage").Gloves,GlovesHandler)
 OrionLib:AddTable(game:GetService("Workspace").EggVendors,EggHandler)
@@ -120,6 +129,51 @@ local T8 = Window:MakeTab({
 Name = "ProximityPrompt",
 Icon = "rbxassetid://",
 PremiumOnly = false
+})
+
+local T9 = Window:MakeTab({
+Name = "Upgrades",
+Icon = "rbxassetid://",
+PremiumOnly = false
+})
+
+local T10 = Window:MakeTab({
+Name = "Skills",
+Icon = "rbxassetid://",
+PremiumOnly = false
+})
+
+local T11 = Window:MakeTab({
+Name = "Powercore",
+Icon = "rbxassetid://",
+PremiumOnly = false
+})
+
+local T12 = Window:MakeTab({
+Name = "Perks",
+Icon = "rbxassetid://",
+PremiumOnly = false
+})
+
+local T13 = Window:MakeTab({
+Name = "Wishing",
+Icon = "rbxassetid://",
+PremiumOnly = false
+})
+
+local T14 = Window:MakeTab({
+Name = "Equipment Store",
+Icon = "rbxassetid://",
+PremiumOnly = false
+})
+
+T9:AddDropdown({
+   Name = "Select Item Name",
+   Default = upgradeList[1],
+   Options = upgradeList,
+   Callback = function(Value)
+      _G.AsyncUpgradeList = Value
+   end    
 })
 
 T8:AddToggle({
@@ -217,12 +271,12 @@ S2:AddToggle({
 })
 
 S2:AddToggle({
-  Name = "Auto Accept Trade",
+  Name = "Auto Ready Trade",
   Default = false,
   Callback = function(Value)
-    _G.atrd = Value
+    _G.rtrd = Value
       while wait() do
-      if _G.atrd == false then break end
+      if _G.rtrd == false then break end
         game:GetService("ReplicatedStorage")["Events"]["TradeState"]:FireServer("Ready")
       end
   end    
@@ -236,6 +290,34 @@ S2:AddToggle({
       while wait() do
       if _G.ctrd == false then break end
         game:GetService("ReplicatedStorage")["Events"]["TradeState"]:FireServer("Cancel")
+      end
+  end    
+})
+
+S2:AddToggle({
+  Name = "Auto Decline Trade Request",
+  Default = false,
+  Callback = function(Value)
+    _G.dtrd = Value
+      while wait() do
+      if _G.dtrd == false then break end
+        PlayerFounder(function(plr)
+           game:GetService("ReplicatedStorage")["Events"]["TradeState"]:FireServer("Decline",plr)
+        end)
+      end
+  end    
+})
+
+S2:AddToggle({
+  Name = "Auto Accept Trade Request",
+  Default = false,
+  Callback = function(Value)
+    _G.atrdr = Value
+      while wait() do
+      if _G.atrdr == false then break end
+        PlayerFounder(function(plr)
+           game:GetService("ReplicatedStorage")["Events"]["TradeState"]:FireServer("Accept",plr)
+        end)
       end
   end    
 })
@@ -465,4 +547,130 @@ T1:AddToggle({
         game:GetService("ReplicatedStorage")["Events"]["SpinWheelEvent"]:FireServer("SpinComplete")
       end
   end
+})
+
+T9:AddToggle({
+  Name = "Auto Upgrade",
+  Default = false,
+  Callback = function(Value)
+    _G.upg = Value
+      while wait() do
+      if _G.upg == false then break end
+        game:GetService("ReplicatedStorage")["Events"]["GemStoreEvent"]:InvokeServer("Purchase",_G.AsyncUpgradeList)
+      end
+  end
+})
+
+T10:AddTextbox({
+  Name = "Insert Skill Name",
+  Default = "Dagger",
+  TextDisappear = false,
+  Callback = function(Value)
+    _G.AsyncSkills = Value
+  end  
+})
+
+T10:AddTextbox({
+  Name = "Insert Skill ID",
+  Default = "0",
+  TextDisappear = false,
+  Callback = function(Value)
+    _G.AsyncSkillsConvert = Value
+  end  
+})
+
+T10:AddToggle({
+  Name = "Auto Craft",
+  Default = false,
+  Callback = function(Value)
+    _G.skills = Value
+      while wait() do
+      if _G.skills == false then break end
+        game:GetService("ReplicatedStorage")["Events"]["CraftingEvent"]:FireServer(_G.AsyncSkills)
+      end
+  end
+})
+
+T10:AddToggle({
+  Name = "Auto Merge",
+  Default = false,
+  Callback = function(Value)
+    _G.skillscr = Value
+      while wait() do
+      if _G.skillscr == false then break end
+        game:GetService("ReplicatedStorage")["Events"]["PlayerMergeEquipment"]:FireServer({_G.AsyncSkillsConvert,_G.AsyncSkillsConvert,_G.AsyncSkillsConvert})
+      end
+  end
+})
+
+T11:AddToggle({
+  Name = "Auto Upgrade Powercore Level",
+  Default = false,
+  Callback = function(Value)
+    _G.powercorelvl = Value
+      while wait() do
+      if _G.powercorelvl == false then break end
+        game:GetService("ReplicatedStorage")["Events"]["PowerCore"]:InvokeServer("PurchaseNext")
+      end
+  end
+})
+
+T12:AddToggle({
+  Name = "Auto Upgrade Perks",
+  Default = false,
+  Callback = function(Value)
+    _G.perksupg = Value
+      while wait() do
+      if _G.perksupg == false then break end
+        game:GetService("ReplicatedStorage")["Events"]["BuyPerkTier"]:FireServer(1)
+        game:GetService("ReplicatedStorage")["Events"]["BuyPerkTier"]:FireServer(2)
+        game:GetService("ReplicatedStorage")["Events"]["BuyPerkTier"]:FireServer(3)
+        game:GetService("ReplicatedStorage")["Events"]["BuyPerkTier"]:FireServer(4)
+        game:GetService("ReplicatedStorage")["Events"]["BuyPerkTier"]:FireServer(5)
+        game:GetService("ReplicatedStorage")["Events"]["BuyPerkTier"]:FireServer(6)
+        game:GetService("ReplicatedStorage")["Events"]["BuyPerkTier"]:FireServer(7)
+      end
+  end
+})
+
+T13:AddButton({
+Name = "Buy Tier 1 [ Small ]",
+Callback = function()
+      game:GetService("ReplicatedStorage")["Events"]["WishingWell"]:FireServer("Small")
+  end    
+})
+
+T13:AddButton({
+Name = "Buy Tier 2 [ Medium ]",
+Callback = function()
+      game:GetService("ReplicatedStorage")["Events"]["WishingWell"]:FireServer("Medium")
+  end    
+})
+
+T13:AddButton({
+Name = "Buy Tier 3 [ Mega ]",
+Callback = function()
+      game:GetService("ReplicatedStorage")["Events"]["WishingWell"]:FireServer("Mega")
+  end    
+})
+
+T14:AddButton({
+Name = "Buy Tier 1",
+Callback = function()
+      game:GetService("ReplicatedStorage")["Events"]["EquipmentStoreEvent"]:InvokeServer("Purchase",1)
+  end    
+})
+
+T14:AddButton({
+Name = "Buy Tier 2",
+Callback = function()
+      game:GetService("ReplicatedStorage")["Events"]["EquipmentStoreEvent"]:InvokeServer("Purchase",2)
+  end    
+})
+
+T14:AddButton({
+Name = "Buy Tier 3",
+Callback = function()
+      game:GetService("ReplicatedStorage")["Events"]["EquipmentStoreEvent"]:InvokeServer("Purchase",3)
+  end    
 })
