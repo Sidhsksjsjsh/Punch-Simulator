@@ -561,6 +561,18 @@ T1:AddToggle({
   end
 })
 
+T1:AddToggle({
+  Name = "Auto Claim Free Wins",
+  Default = false,
+  Callback = function(Value)
+    _G.freewins = Value
+      while wait() do
+      if _G.freewins == false then break end
+        game:GetService("ReplicatedStorage")["Events"]["FreeRobloxShop"]:FireServer()
+      end
+  end
+})
+
 T9:AddToggle({
   Name = "Auto Upgrade",
   Default = false,
