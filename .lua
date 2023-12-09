@@ -65,7 +65,7 @@ end
 local function getHiddenChest(str)
     descend(str,function(detection)
         if str.Name:lower() == "sparkle" and detection:IsA("ProximityPrompt") then
-            fireproximityprompt(i)
+            fireproximityprompt(detection)
             TextHiddentChest(str:sub(43))
         end
     end)
