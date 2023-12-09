@@ -52,11 +52,21 @@ end
 
 --game:GetService("Workspace").HiddenChests.8["Meshes/CamronTreasure_Cube.001 (2)"].Sparkle
 
+local function TextHiddentChest(str)
+    if tonumber(str) < 10 then
+        OrionLib:MakeNotification({Name = "Hidden Chest detected!",Content = "A hidden chest appears in zone " .. tostring(str:sub(43,43)) .. "!",Image = "rbxassetid://",Time = 5})
+    elseif tonumber(str) > 9 then
+        OrionLib:MakeNotification({Name = "Hidden Chest detected!",Content = "A hidden chest appears in zone " .. tostring(str:sub(43,44)) .. "!",Image = "rbxassetid://",Time = 5})
+    elseif tonumber(str) > 99 then
+        OrionLib:MakeNotification({Name = "Hidden Chest detected!",Content = "A hidden chest appears in zone " .. tostring(str:sub(43,45)) .. "!",Image = "rbxassetid://",Time = 5})
+    end
+end
+
 local function getHiddenChest(str)
     descend(str,function(detection)
         if str.Name:lower() == "sparkle" and detection:IsA("ProximityPrompt") then
             fireproximityprompt(i)
-            OrionLib:MakeNotification({Name = "Hidden Chest detected!",Content = "A hidden chest appears in zone " .. tostring(str:sub(1,43)) .. "!",Image = "rbxassetid://",Time = 5})
+            TextHiddentChest(str:sub(43))
         end
     end)
 end
