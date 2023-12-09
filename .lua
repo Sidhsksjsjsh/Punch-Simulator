@@ -6,6 +6,10 @@ local function AutoFight(world,enemy) -- world = 1, enemy = 2
     game:GetService("ReplicatedStorage")["Events"]["AutoFight"]:FireServer("Fight",world,enemy)
 end
 
+local function GetText(path)
+    return path.Text
+end
+
 local function child(wrkspc,func)
 for i,v in pairs(wrkspc:GetChildren()) do
         func(v)
@@ -166,6 +170,8 @@ Name = "Equipment Store",
 Icon = "rbxassetid://",
 PremiumOnly = false
 })
+
+local PlayerStats = T1:AddParagraph("Your Damage, Coins and Gems","Damage: ${dmg}\nCoins: ${coin}\nGems: ${gem}")
 
 T9:AddDropdown({
    Name = "Select Item Name",
@@ -639,6 +645,18 @@ T11:AddToggle({
   end
 })
 
+T11:AddToggle({
+  Name = "Auto Upgrade Powercore V2 Level",
+  Default = false,
+  Callback = function(Value)
+    _G.powercorelvlv2 = Value
+      while wait() do
+      if _G.powercorelvlv2 == false then break end
+        game:GetService("ReplicatedStorage")["Events"]["PowerCoreV2"]:InvokeServer("PurchaseNext")
+      end
+  end
+})
+
 T12:AddToggle({
   Name = "Auto Upgrade Perks",
   Default = false,
@@ -698,3 +716,8 @@ Callback = function()
       game:GetService("ReplicatedStorage")["Events"]["EquipmentStoreEvent"]:InvokeServer("Purchase",3)
   end    
 })
+
+--"Damage: ${dmg}\nCoins: ${coin}\nGems: ${gem}"
+while wait() do
+    PlayerStats:Set("Damage: " .. GetText(lp["PlayerGui"]["MainUi"]["Top"]["Damage"]["TextLabel"]) .. "\nCoins: " .. GetText(lp["PlayerGui"]["MainUi"]["Top"]["Coins"]["TextLabel"]) .. "\nGems: " .. GetText(lp["PlayerGui"]["MainUi"]["Top"]["Gems"]["TextLabel"]),"")
+end
