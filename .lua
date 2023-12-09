@@ -50,19 +50,18 @@ local function NearNPC(str,array)
     return NPCTerdekat
 end
 
---[[Main loop
-while true do
-    wait(1)  -- Ubah sesuai kebutuhan
-    
-    local NPC = CariNPCTerdekat()
-    
-    if NPC then
-        print("NPC terdekat ditemukan:", NPC.Name)
-        -- Lakukan tindakan terhadap NPC terdekat di sini
-    else
-        print("Tidak ada NPC terdekat.")
-    end
-end]]
+--game:GetService("Workspace").HiddenChests.8["Meshes/CamronTreasure_Cube.001 (2)"].Sparkle
+
+local function getHiddenChest(str)
+    descend(str,function(detection)
+        if str.Name:lower() == "sparkle" and detection:IsA("ProximityPrompt") then
+            fireproximityprompt(i)
+            OrionLib:MakeNotification({Name = "Hidden Chest detected!",Content = "A hidden chest appears in zone " .. tostring(str:sub(1,43)) .. "!",Image = "rbxassetid://",Time = 5})
+        end
+    end)
+end
+
+workspace.DescendantAdded:Connect(getHiddenChest)
 
 local GlovesHandler = {}
 local EggHandler = {}
