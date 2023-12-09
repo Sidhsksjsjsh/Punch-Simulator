@@ -727,6 +727,8 @@ Callback = function()
 })
 
 --"Damage: ${dmg}\nCoins: ${coin}\nGems: ${gem}"
+task.spawn(function()
 while wait() do
     PlayerStats:Set("Damage: " .. GetText(lp["PlayerGui"]["MainUi"]["Top"]["Damage"]["TextLabel"]) .. "\nCoins: " .. GetText(lp["PlayerGui"]["MainUi"]["Top"]["Coins"]["TextLabel"]) .. "\nGems: " .. GetText(lp["PlayerGui"]["MainUi"]["Top"]["Gems"]["TextLabel"]),"")
 end
+end)
