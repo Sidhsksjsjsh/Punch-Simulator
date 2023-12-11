@@ -42,12 +42,26 @@ local function NearNPC(str,array)
             local jarak = (npc:FindFirstChild("HumanoidRootPart").Position - lp.Character.HumanoidRootPart.Position).Magnitude
             if jarak < array then
                 NPCTerdekat = npc
-                --jarakTerdekat = jarak
             end
         end
     end)
     
     return NPCTerdekat
+end
+
+local function NearPlayer(array)
+    local PlayerTerdekat
+    
+    PlayerFounder(function(playerIntsc)
+        if playerIntsc.Character then
+            local jarak = (playerIntsc.Character.HumanoidRootPart.Position - lp.Character.HumanoidRootPart.Position).Magnitude
+            if jarak < array then
+                PlayerTerdekat = npc
+            end
+        end
+    end)
+    
+    return PlayerTerdekat
 end
 
 --game:GetService("Workspace").HiddenChests.8["Meshes/CamronTreasure_Cube.001 (2)"].Sparkle
@@ -723,6 +737,18 @@ T14:AddButton({
 Name = "Buy Tier 3",
 Callback = function()
       game:GetService("ReplicatedStorage")["Events"]["EquipmentStoreEvent"]:InvokeServer("Purchase",3)
+  end    
+})
+
+T1:AddToggle({
+  Name = "Auto Punch Nearest",
+  Default = false,
+  Callback = function(Value)
+    _G.pp = Value
+      while wait() do
+      if _G.pp == false then break end
+        game:GetService("ReplicatedStorage")["Events"]["PunchPlayer"]:FireServer(NearPlayer(11))
+      end
   end    
 })
 
