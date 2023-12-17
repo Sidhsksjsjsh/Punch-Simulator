@@ -1,6 +1,6 @@
 --[[
 Next Update: Complete features, all game systems are here!
-workspace.LevelBarriers
+workspace.LevelBarriers wait
 ]]
 
 local function AutoFight(world,enemy) -- world = 1, enemy = 2
@@ -27,6 +27,12 @@ local function descend(wrkspc,func)
 for i,v in pairs(wrkspc:GetDescendants()) do
         func(v)
     end
+end
+
+local function TextChanged(str,funct)
+str:GetPropertyChangedSignal("Text"):Connect(function()
+	funct()
+end)
 end
 
 local OrionLib = loadstring(game:HttpGet("https://pastebin.com/raw/NMEHkVTb"))()
@@ -759,7 +765,10 @@ T1:AddToggle({
   end    
 })
 
---"Damage: ${dmg}\nCoins: ${coin}\nGems: ${gem}"
+TextChanged(str,function()
+    k
+end)
+
 task.spawn(function()
 while wait() do
     PlayerStats:Set("Damage: " .. GetText(lp["PlayerGui"]["MainUi"]["Top"]["Damage"]["TextLabel"]) .. "\nCoins: " .. GetText(lp["PlayerGui"]["MainUi"]["Top"]["Coins"]["TextLabel"]) .. "\nGems: " .. GetText(lp["PlayerGui"]["MainUi"]["Top"]["Gems"]["TextLabel"]),"")
