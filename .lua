@@ -205,7 +205,7 @@ local PlayerStats = T1:AddParagraph("Your Damage, Coins and Gems","Damage: ${dmg
 local pc1 = T11:AddParagraph("Powercore","Loading Powercore stats & price..")
 local pc2 = T11:AddParagraph("Powercore V2","Loading Powercore stats & price..")
 
-local es1 = T14:AddParagraph("Equipment Store","Loading Powercore stats & price..")
+local es = T14:AddParagraph("Equipment Store","Loading Equipment Store..")
 
 T9:AddDropdown({
    Name = "Select Item Name",
@@ -765,8 +765,24 @@ T1:AddToggle({
   end    
 })
 
-TextChanged(str,function()
-    k
+TextChanged(lp["PlayerGui"]["PowerCoreUi"]["Frame"]["GemsButton"]["Boosts"]["Title"],function()
+	pc1:Set("Level: " .. GetText(lp["PlayerGui"]["PowerCoreUi"]["Frame"]["Level"]["LevelNumber"]["Title"]) .. "\nPrice: " .. GetText(lp["PlayerGui"]["PowerCoreUi"]["Frame"]["GemsButton"]["Boosts"]["Title"]),"")
+end)
+
+TextChanged(lp["PlayerGui"]["PowerCoreV2Ui"]["Frame"]["GemsButton"]["Boosts"]["Title"],function()
+	pc2:Set("Level: " .. GetText(lp["PlayerGui"]["PowerCoreV2Ui"]["Frame"]["Level"]["LevelNumber"]["Title"]) .. "\nPrice: " .. GetText(lp["PlayerGui"]["PowerCoreUi"]["Frame"]["GemsButton"]["Boosts"]["Title"]),"")
+end)
+
+TextChanged(lp["PlayerGui"]["EquipmentShop"]["Frame"]["1"]["EquipmentName"]["Title"],function()
+	es:Set("Equipment name: " .. GetText(lp["PlayerGui"]["EquipmentShop"]["Frame"]["1"]["EquipmentName"]["Title"]) .. "\nPrice: " .. GetText(lp["PlayerGui"]["EquipmentShop"]["Frame"]["1"]["BuyButton"]["Price"]["Title"]),"")
+end)
+
+TextChanged(lp["PlayerGui"]["EquipmentShop"]["Frame"]["2"]["EquipmentName"]["Title"],function()
+	es:Set("Equipment name: " .. GetText(lp["PlayerGui"]["EquipmentShop"]["Frame"]["2"]["EquipmentName"]["Title"]) .. "\nPrice: " .. GetText(lp["PlayerGui"]["EquipmentShop"]["Frame"]["2"]["BuyButton"]["Price"]["Title"]),"")
+end)
+
+TextChanged(lp["PlayerGui"]["EquipmentShop"]["Frame"]["3"]["EquipmentName"]["Title"],function()
+	es:Set("Equipment name: " .. GetText(lp["PlayerGui"]["EquipmentShop"]["Frame"]["3"]["EquipmentName"]["Title"]) .. "\nPrice: " .. GetText(lp["PlayerGui"]["EquipmentShop"]["Frame"]["3"]["BuyButton"]["Price"]["Title"]),"")
 end)
 
 task.spawn(function()
