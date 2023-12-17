@@ -774,9 +774,9 @@ TextChanged(lp["PlayerGui"]["PowerCoreV2Ui"]["Frame"]["GemsButton"]["Boosts"]["T
 end)
 
 TextChanged(lp["PlayerGui"]["EquipmentShop"]["Frame"]["1"]["EquipmentName"]["Title"],function()
-	es:Set("Equipment name: " .. GetText(lp["PlayerGui"]["EquipmentShop"]["Frame"]["1"]["EquipmentName"]["Title"]) .. "\nPrice: " .. GetText(lp["PlayerGui"]["EquipmentShop"]["Frame"]["1"]["BuyButton"]["Price"]["Title"]),"")
+	es:Set("Equipment name: " .. GetText(lp["PlayerGui"]["EquipmentShop"]["Frame"]["1"]["EquipmentName"]["Title"]) .. " - " .. GetText(lp["PlayerGui"]["EquipmentShop"]["Frame"]["1"]["BuyButton"]["Price"]["Title"]) .. " Gems\nEquipment name: " .. GetText(lp["PlayerGui"]["EquipmentShop"]["Frame"]["2"]["EquipmentName"]["Title"]) .. " - " .. GetText(lp["PlayerGui"]["EquipmentShop"]["Frame"]["2"]["BuyButton"]["Price"]["Title"]) .. " Gems\nEquipment name: " .. GetText(lp["PlayerGui"]["EquipmentShop"]["Frame"]["3"]["EquipmentName"]["Title"]) .. " - " .. GetText(lp["PlayerGui"]["EquipmentShop"]["Frame"]["3"]["BuyButton"]["Price"]["Title"]) .. " Gems","")
 end)
-
+--[[
 TextChanged(lp["PlayerGui"]["EquipmentShop"]["Frame"]["2"]["EquipmentName"]["Title"],function()
 	es:Set("Equipment name: " .. GetText(lp["PlayerGui"]["EquipmentShop"]["Frame"]["2"]["EquipmentName"]["Title"]) .. "\nPrice: " .. GetText(lp["PlayerGui"]["EquipmentShop"]["Frame"]["2"]["BuyButton"]["Price"]["Title"]),"")
 end)
@@ -784,7 +784,7 @@ end)
 TextChanged(lp["PlayerGui"]["EquipmentShop"]["Frame"]["3"]["EquipmentName"]["Title"],function()
 	es:Set("Equipment name: " .. GetText(lp["PlayerGui"]["EquipmentShop"]["Frame"]["3"]["EquipmentName"]["Title"]) .. "\nPrice: " .. GetText(lp["PlayerGui"]["EquipmentShop"]["Frame"]["3"]["BuyButton"]["Price"]["Title"]),"")
 end)
-
+]]
 task.spawn(function()
 while wait() do
     PlayerStats:Set("Damage: " .. GetText(lp["PlayerGui"]["MainUi"]["Top"]["Damage"]["TextLabel"]) .. "\nCoins: " .. GetText(lp["PlayerGui"]["MainUi"]["Top"]["Coins"]["TextLabel"]) .. "\nGems: " .. GetText(lp["PlayerGui"]["MainUi"]["Top"]["Gems"]["TextLabel"]),"")
