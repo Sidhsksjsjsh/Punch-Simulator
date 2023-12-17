@@ -1,5 +1,6 @@
 --[[
 Next Update: Complete features, all game systems are here!
+workspace.LevelBarriers
 ]]
 
 local function AutoFight(world,enemy) -- world = 1, enemy = 2
@@ -195,6 +196,10 @@ PremiumOnly = false
 })
 
 local PlayerStats = T1:AddParagraph("Your Damage, Coins and Gems","Damage: ${dmg}\nCoins: ${coin}\nGems: ${gem}")
+local pc1 = T11:AddParagraph("Powercore","Loading Powercore stats & price..")
+local pc2 = T11:AddParagraph("Powercore V2","Loading Powercore stats & price..")
+
+local es1 = T14:AddParagraph("Equipment Store","Loading Powercore stats & price..")
 
 T9:AddDropdown({
    Name = "Select Item Name",
@@ -254,7 +259,9 @@ T5:AddToggle({
     _G.GUIButton = Value
       while wait() do
       if _G.GUIButton == false then break end
-        game:GetService("ReplicatedStorage")["Events"]["LevelGUIBuyButtonPressed"]:FireServer(_G.AsyncWorldNumber)
+        child(workspace.LevelBarriers,function(getDoor)
+            game:GetService("ReplicatedStorage")["Events"]["LevelGUIBuyButtonPressed"]:FireServer(getDoor)
+        end)
       end
   end    
 })
